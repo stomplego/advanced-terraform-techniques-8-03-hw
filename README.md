@@ -25,11 +25,11 @@
 1. Возьмите из [демонстрации к лекции готовый код](https://github.com/netology-code/ter-homeworks/tree/main/04/demonstration1) для создания с помощью двух вызовов remote-модуля -> двух ВМ, относящихся к разным проектам(marketing и analytics) используйте labels для обозначения принадлежности.  В файле cloud-init.yml необходимо использовать переменную для ssh-ключа вместо хардкода. Передайте ssh-ключ в функцию template_file в блоке vars ={} .
 Воспользуйтесь [**примером**](https://grantorchard.com/dynamic-cloudinit-content-with-terraform-file-templates/). Обратите внимание, что ssh-authorized-keys принимает в себя список, а не строку.
 
-Доказательство выполнения в дир zadanie1-1
+Доказательство выполнения в дир zadanie1-1: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie1-1
 
 2. Добавьте в файл cloud-init.yml установку nginx. 
 
-Доказательство выполнения в дир zadanie1-2, в файле result.txt
+Доказательство выполнения в дир zadanie1-2, в файле result.txt: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie1-2
 
 3. Предоставьте скриншот подключения к консоли и вывод команды ```sudo nginx -t```, скриншот консоли ВМ yandex cloud с их метками. Откройте terraform console и предоставьте скриншот содержимого модуля. Пример: > module.marketing_vm
 
@@ -50,7 +50,7 @@
 
 2. Вы должны передать в модуль переменные с названием сети, zone и v4_cidr_blocks.
 
-Доказательство выполнения в дир zadanie2-2
+Доказательство выполнения в дир zadanie2-2: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie2-2
 
 3. Модуль должен возвращать в root module с помощью output информацию о yandex_vpc_subnet. Пришлите скриншот информации из terraform console о своем модуле. Пример: > module.vpc_dev  
 
@@ -58,7 +58,7 @@
 
 4. Замените ресурсы yandex_vpc_network и yandex_vpc_subnet созданным модулем. Не забудьте передать необходимые параметры сети из модуля vpc в модуль с виртуальной машиной.
 
-Доказательство выполнения в дир zadanie2-4
+Доказательство выполнения в дир zadanie2-4: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie2-4
 
 5. Сгенерируйте документацию к модулю с помощью terraform-docs.
  
@@ -73,22 +73,22 @@ module "vpc_dev" {
 }
 
 
-Доказательство выполнения в дир zadanie2-5
+Доказательство выполнения в дир zadanie2-5: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie2-5
 
 ```
 
 ### Задание 3
 1. Выведите список ресурсов в стейте.
 
-Доказательство выполнения в дир zadanie3-1
+Доказательство выполнения в дир zadanie3-1: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie3-1
 
 2. Полностью удалите из стейта модуль vpc.
 
-Доказательство выполнения в дир zadanie3-2
+Доказательство выполнения в дир zadanie3-2: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie3-2
 
 3. Полностью удалите из стейта модуль vm.
 
-Доказательство выполнения в дир zadanie3-3
+Доказательство выполнения в дир zadanie3-3: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie3-3
 
 4. Импортируйте всё обратно. Проверьте terraform plan. Значимых(!!) изменений быть не должно.
 Приложите список выполненных команд и скриншоты процессы.
@@ -131,4 +131,4 @@ echo "" | tee -a zadanie3-4
   echo "----------------------------------------"
 } >> zadanie3-4 2>&1
 
-Результат не стал скринить, т.к. он находится в дир zadanie3-4
+Результат не стал скринить, т.к. он находится в дир zadanie3-4: https://github.com/stomplego/advanced-terraform-techniques-8-03-hw/tree/main/zadanie3-4
