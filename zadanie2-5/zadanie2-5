@@ -1,0 +1,80 @@
+=== ЗАДАНИЕ 2-5: ДОКУМЕНТАЦИЯ МОДУЛЯ С TERRAFORM-DOCS ===
+
+=== 1. ВЕРСИЯ TERRAFORM-DOCS ===
+terraform-docs version v0.21.0 0643382 linux/amd64
+
+=== 2. СГЕНЕРИРОВАННАЯ ДОКУМЕНТАЦИЯ ===
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_yandex"></a> [yandex](#provider\_yandex) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [yandex_vpc_subnet.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_subnet) | resource |
+| [yandex_vpc_network.existing](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/vpc_network) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_network_name"></a> [network\_name](#input\_network\_name) | VPC network name | `string` | n/a | yes |
+| <a name="input_subnet_name"></a> [subnet\_name](#input\_subnet\_name) | Subnet name | `string` | n/a | yes |
+| <a name="input_v4_cidr_blocks"></a> [v4\_cidr\_blocks](#input\_v4\_cidr\_blocks) | CIDR blocks for subnet | `list(string)` | <pre>[<br/>  "10.0.1.0/24"<br/>]</pre> | no |
+| <a name="input_zone"></a> [zone](#input\_zone) | Availability zone | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_network_id"></a> [network\_id](#output\_network\_id) | VPC network ID |
+| <a name="output_subnet_all"></a> [subnet\_all](#output\_subnet\_all) | Complete subnet information |
+| <a name="output_subnet_cidr"></a> [subnet\_cidr](#output\_subnet\_cidr) | Subnet CIDR blocks |
+| <a name="output_subnet_created_at"></a> [subnet\_created\_at](#output\_subnet\_created\_at) | Subnet creation timestamp |
+| <a name="output_subnet_folder_id"></a> [subnet\_folder\_id](#output\_subnet\_folder\_id) | Folder ID where subnet resides |
+| <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | Subnet ID |
+| <a name="output_subnet_labels"></a> [subnet\_labels](#output\_subnet\_labels) | Subnet labels |
+| <a name="output_subnet_name"></a> [subnet\_name](#output\_subnet\_name) | Subnet name |
+| <a name="output_subnet_network_id"></a> [subnet\_network\_id](#output\_subnet\_network\_id) | Network ID |
+| <a name="output_subnet_v6_cidr_blocks"></a> [subnet\_v6\_cidr\_blocks](#output\_subnet\_v6\_cidr\_blocks) | IPv6 CIDR blocks |
+| <a name="output_subnet_zone"></a> [subnet\_zone](#output\_subnet\_zone) | Subnet zone |
+
+=== 3. ПРИМЕР ВЫЗОВА МОДУЛЯ (из задания) ===
+
+module "vpc_dev" {
+  source       = "./modules/vpc"
+  network_name = "develop"
+  subnet_name  = "develop-ru-central1-a"
+  zone         = "ru-central1-a"
+  v4_cidr_blocks = ["10.0.1.0/24"]
+}
+
+=== 4. РЕАЛЬНЫЙ ВЫЗОВ МОДУЛЯ В ПРОЕКТЕ ===
+module "vpc" {
+  source = "./modules/vpc"
+
+  network_name   = var.vpc_name
+  subnet_name    = "${var.vpc_name}-module-${var.default_zone}"
+  zone           = var.default_zone
+  v4_cidr_blocks = var.default_cidr
+}
+
+# Шаблон для cloud-init marketing
+data "template_file" "cloudinit_marketing" {
+
+=== 5. РЕЗУЛЬТАТ РАБОТЫ МОДУЛЯ ===
+
+
+=== 6. ПРОВЕРКА СОЗДАНИЯ ФАЙЛА ===
+Файл README.md создан: -rw-rw-r-- 1 stomple docker 2316 Mar 15 10:07 modules/vpc/README.md

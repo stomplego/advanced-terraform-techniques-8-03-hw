@@ -1,0 +1,86 @@
+=== ЗАДАНИЕ 2-2: ПЕРЕДАЧА ПЕРЕМЕННЫХ В МОДУЛЬ ===
+
+=== 1. ПЕРЕМЕННЫЕ МОДУЛЯ (network_name, zone, v4_cidr_blocks) ===
+variable "network_name" {
+  type        = string
+  description = "VPC network name"
+}
+
+variable "subnet_name" {
+  type        = string
+  description = "Subnet name"
+}
+
+variable "zone" {
+  type        = string
+  description = "Availability zone"
+}
+
+variable "v4_cidr_blocks" {
+  type        = list(string)
+  description = "CIDR blocks for subnet"
+  default     = ["10.0.1.0/24"]
+}
+
+=== 2. ИСПОЛЬЗОВАНИЕ ПЕРЕМЕННЫХ В МОДУЛЕ ===
+# Получаем существующую сеть по имени
+data "yandex_vpc_network" "existing" {
+  name = var.network_name
+}
+
+# Создаем новую подсеть с переданными параметрами
+resource "yandex_vpc_subnet" "this" {
+  name           = var.subnet_name
+  zone           = var.zone
+  network_id     = data.yandex_vpc_network.existing.id
+  v4_cidr_blocks = var.v4_cidr_blocks
+}
+
+=== 3. ВЫЗОВ МОДУЛЯ С ПЕРЕДАЧЕЙ ПАРАМЕТРОВ ===
+module "vpc" {
+  source = "./modules/vpc"
+
+  network_name   = var.vpc_name
+  subnet_name    = "${var.vpc_name}-module-${var.default_zone}"
+  zone           = var.default_zone
+  v4_cidr_blocks = var.default_cidr
+}
+
+# Шаблон для cloud-init marketing
+data "template_file" "cloudinit_marketing" {
+
+=== 4. ПЕРЕМЕННЫЕ В КОРНЕВОМ variables.tf ===
+vpc_name:
+variable "vpc_name" {
+  type        = string
+  default     = "develop"
+  description = "VPC network name"
+}
+
+
+default_zone:
+variable "default_zone" {
+  type        = string
+  default     = "ru-central1-a"
+  description = "Default zone"
+}
+
+
+default_cidr:
+variable "default_cidr" {
+  type        = list(string)
+  default     = ["10.0.3.0/24"]
+  description = "Default CIDR"
+}
+
+
+=== 5. РЕЗУЛЬТАТ: СОЗДАННАЯ ПОДСЕТЬ ===
+id: e9b3evrgb9l620jbmimo
+folder_id: b1gov5kj7q7emjsvjsq9
+created_at: "2026-03-15T09:36:59Z"
+name: develop-module-ru-central1-a
+network_id: enp610aonv8c5be15he5
+zone_id: ru-central1-a
+v4_cidr_blocks:
+  - 10.0.3.0/24
+

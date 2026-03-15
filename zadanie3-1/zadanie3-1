@@ -1,0 +1,35 @@
+=== ЗАДАНИЕ 3-1: СПИСОК РЕСУРСОВ В СТЕЙТЕ ===
+
+=== 1. ИНФОРМАЦИЯ О STATE-ФАЙЛЕ ===
+Файл: terraform.tfstate
+Размер: $(ls -lh terraform.tfstate | awk '{print $5}')
+Дата создания: $(ls -l terraform.tfstate | awk '{print $6, $7, $8}')
+
+=== 2. ПОЛНЫЙ СПИСОК РЕСУРСОВ ===
+
+$(cat terraform.tfstate | jq -r '.resources[] | "→ " + (if .module then .module + "/" else "" end) + .type + "." + .name + " (" + .mode + ")"' 2>/dev/null)
+
+=== 3. КОЛИЧЕСТВО РЕСУРСОВ ПО ТИПАМ ===
+
+Data источники:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.mode=="data") | .type' 2>/dev/null | sort | uniq -c | sed 's/^/  /')
+
+Managed ресурсы:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.mode=="managed") | .type' 2>/dev/null | sort | uniq -c | sed 's/^/  /')
+
+=== 4. РЕСУРСЫ ПО МОДУЛЯМ ===
+
+Корневой модуль:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.module==null) | "  - " + .type + "." + .name' 2>/dev/null)
+
+Модуль vpc:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.module=="module.vpc") | "  - " + .type + "." + .name' 2>/dev/null)
+
+Модуль marketing-vm:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.module=="module.marketing-vm") | "  - " + .type + "." + .name' 2>/dev/null)
+
+Модуль analytics-vm:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.module=="module.analytics-vm") | "  - " + .type + "." + .name' 2>/dev/null)
+
+=== 5. ОБЩЕЕ КОЛИЧЕСТВО РЕСУРСОВ ===
+Всего ресурсов: $(cat terraform.tfstate | jq '.resources | length' 2>/dev/null)

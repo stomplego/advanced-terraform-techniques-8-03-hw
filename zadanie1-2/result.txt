@@ -1,0 +1,48 @@
+=== РЕЗУЛЬТАТЫ ВЫПОЛНЕНИЯ ===
+
+=== terraform output ===
+analytics_vm_external_ip = [
+  "130.193.36.44",
+]
+analytics_vm_fqdn = [
+  "analytics-analytics-vm-0.ru-central1.internal",
+]
+analytics_vm_internal_ip = [
+  "10.0.1.21",
+]
+marketing_vm_external_ip = [
+  "158.160.40.11",
+]
+marketing_vm_fqdn = [
+  "marketing-marketing-vm-0.ru-central1.internal",
+]
+marketing_vm_internal_ip = [
+  "10.0.1.9",
+]
+
+=== Проверка marketing VM ===
+<h1>Welcome to marketing VM</h1>
+
+=== Проверка analytics VM ===
+<h1>Welcome to analytics VM</h1>
+
+=== Содержимое cloud-init.yml ===
+#cloud-config
+users:
+  - name: ubuntu
+    groups: sudo
+    shell: /bin/bash
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+package_update: true
+package_upgrade: false
+packages:
+  - vim
+  - nginx
+
+# Дополнительные команды после установки пакетов
+runcmd:
+  - systemctl enable nginx
+  - systemctl start nginx
+  - echo "<h1>Welcome to ${project_name} VM</h1>" | sudo tee /var/www/html/index.html

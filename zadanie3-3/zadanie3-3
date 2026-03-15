@@ -1,0 +1,33 @@
+=== ЗАДАНИЕ 3-3: УДАЛЕНИЕ МОДУЛЕЙ VM ИЗ СТЕЙТА ===
+
+=== 1. ПРОВЕРКА STATE-ФАЙЛА ===
+$(ls -la terraform.tfstate*)
+
+=== 2. РЕСУРСЫ МОДУЛЕЙ VM ДО УДАЛЕНИЯ ===
+Ресурсы модуля marketing-vm в стейте:
+$(cat terraform.tfstate.backup.before_vm_removal 2>/dev/null | jq -r '.resources[] | select(.module=="module.marketing-vm") | "  - " + .type + "." + .name' 2>/dev/null || echo "  Ресурсы не найдены")
+
+Ресурсы модуля analytics-vm в стейте:
+$(cat terraform.tfstate.backup.before_vm_removal 2>/dev/null | jq -r '.resources[] | select(.module=="module.analytics-vm") | "  - " + .type + "." + .name' 2>/dev/null || echo "  Ресурсы не найдены")
+
+=== 3. СОЗДАНИЕ РЕЗЕРВНОЙ КОПИИ ===
+Резервная копия создана: terraform.tfstate.backup.before_vm_removal
+
+=== 4. УДАЛЕНИЕ МОДУЛЕЙ VM ИЗ STATE-ФАЙЛА ===
+Выполнена команда удаления модулей marketing-vm и analytics-vm
+
+=== 5. ПРОВЕРКА ПОСЛЕ УДАЛЕНИЯ ===
+Ресурсы модуля marketing-vm после удаления:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.module=="module.marketing-vm") | "  - " + .type + "." + .name' 2>/dev/null || echo "  ✓ Модуль marketing-vm успешно удален из стейта")
+
+Ресурсы модуля analytics-vm после удаления:
+$(cat terraform.tfstate | jq -r '.resources[] | select(.module=="module.analytics-vm") | "  - " + .type + "." + .name' 2>/dev/null || echo "  ✓ Модуль analytics-vm успешно удален из стейта")
+
+=== 6. ИТОГОВЫЙ СПИСОК РЕСУРСОВ ===
+Оставшиеся ресурсы в стейте:
+$(cat terraform.tfstate | jq -r '.resources[] | "  - " + .type + "." + .name' 2>/dev/null)
+
+=== 7. СРАВНЕНИЕ С РЕЗЕРВНОЙ КОПИЕЙ ===
+Размер state до удаления VM: $(ls -la terraform.tfstate.backup.before_vm_removal 2>/dev/null | awk '{print $5}') байт
+Размер нового state: $(ls -la terraform.tfstate | awk '{print $5}') байт
+Разница: $(( $(ls -la terraform.tfstate | awk '{print $5}') - $(ls -la terraform.tfstate.backup.before_vm_removal 2>/dev/null | awk '{print $5}') )) байт

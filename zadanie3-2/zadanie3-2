@@ -1,0 +1,34 @@
+=== ЗАДАНИЕ 3-2: УДАЛЕНИЕ МОДУЛЯ VPC ИЗ СТЕЙТА ===
+
+=== 1. ПРОВЕРКА STATE-ФАЙЛА ===
+-rw-r--r-- 1 stomple stomple 20782 Mar 15 09:55 terraform.tfstate
+-rw-r--r-- 1 stomple stomple 20558 Mar 15 09:55 terraform.tfstate.backup
+
+=== 2. РЕСУРСЫ МОДУЛЯ VPC ДО УДАЛЕНИЯ ===
+Ресурсы модуля vpc в стейте:
+  - yandex_vpc_network.existing
+  - yandex_vpc_subnet.this
+
+=== 3. СОЗДАНИЕ РЕЗЕРВНОЙ КОПИИ ===
+Резервная копия создана: terraform.tfstate.backup.before_removal
+
+=== 4. УДАЛЕНИЕ МОДУЛЯ VPC ИЗ STATE-ФАЙЛА ===
+Удаляем ресурсы модуля vpc из state-файла...
+Модуль vpc удален из state-файла
+
+=== 5. ПРОВЕРКА ПОСЛЕ УДАЛЕНИЯ ===
+Ресурсы модуля vpc после удаления:
+
+=== 6. ИТОГОВЫЙ СПИСОК РЕСУРСОВ ===
+Оставшиеся ресурсы в стейте:
+  - template_file.cloudinit_analytics
+  - template_file.cloudinit_marketing
+  - module.analytics-vm/yandex_compute_image.my_image
+  - module.analytics-vm/yandex_compute_instance.vm
+  - module.marketing-vm/yandex_compute_image.my_image
+  - module.marketing-vm/yandex_compute_instance.vm
+
+=== 7. СРАВНЕНИЕ С РЕЗЕРВНОЙ КОПИЕЙ ===
+Размер оригинального state: 20782 байт
+Размер нового state: 18556 байт
+Разница: -2226 байт
